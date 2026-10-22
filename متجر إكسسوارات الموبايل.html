@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>متجر إكسسوارات الموبايل</title>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===== Design tokens (light default, dark via OS or toggle) ===== */
+:root{--bg:#f6f8fb;--card:rgba(255,255,255,.92);--tx:#0f1f3d;--mu:#6b7a90;--bd:rgba(15,31,61,.1);--pr:#0f1f3d;--pr2:#1b2f57;--ac:#1fa971;--or:#ff7a00;--ac-tx:#fff;--warn:#b45309;--bad:#b91c1c;--in:rgba(255,255,255,.9);color-scheme:light}
+
+
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{font-family:'Tajawal',Tahoma,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;
+ background-image:radial-gradient(50rem 30rem at 95% 30%,color-mix(in srgb,var(--or) 10%,transparent),transparent);background-attachment:fixed}
+.glass{background:#fff;border:1px solid var(--bd);box-shadow:0 4px 18px rgba(15,31,61,.06);border-radius:1rem}
+.mu{color:var(--mu)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.55rem 1rem;border-radius:.75rem;font-weight:700;border:1px solid var(--bd);background:var(--in);color:var(--tx);cursor:pointer;transition:transform .15s,opacity .15s}
+.btn:hover{transform:translateY(-1px)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn-pr{background:var(--pr);color:#fff;border-color:transparent}
+.btn-ac{background:var(--or);color:#fff;border-color:transparent}
+.inp{width:100%;padding:.55rem .8rem;border-radius:.75rem;border:1px solid var(--bd);background:var(--in);color:var(--tx);outline:none}
+.inp:focus,.btn:focus-visible,.chip:focus-visible,button:focus-visible{outline:2px solid var(--or);outline-offset:2px}
+.chip{padding:.35rem .9rem;border-radius:999px;border:1px solid var(--bd);background:var(--in);cursor:pointer;font-weight:500;white-space:nowrap}
+.chip.on{background:var(--or);color:#fff;border-color:transparent}
+.tab{padding:.5rem 1.1rem;border-radius:.75rem;font-weight:700;cursor:pointer}.tab.on{background:var(--pr);color:#fff}
+.badge{display:inline-block;padding:.15rem .6rem;border-radius:999px;font-size:.75rem;font-weight:700}
+.b-ok{background:color-mix(in srgb,var(--ac) 22%,transparent);color:var(--ac)}
+.b-bad{background:color-mix(in srgb,var(--bad) 20%,transparent);color:var(--bad)}
+.b-warn{background:color-mix(in srgb,var(--warn) 22%,transparent);color:var(--warn)}
+.tbl{width:100%;border-collapse:collapse;font-size:.9rem}.tbl th,.tbl td{padding:.55rem .7rem;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}
+.tbl th{color:var(--mu);font-weight:700;cursor:default}.tbl th.sort{cursor:pointer}
+.scroll-x{overflow-x:auto;max-width:100%}
+.pimg{aspect-ratio:4/3;border-radius:.8rem;display:flex;align-items:center;justify-content:center;font-size:3.6rem}
+#drawer{position:fixed;top:0;bottom:0;left:0;width:min(24rem,100%);transform:translateX(-105%);transition:transform .3s;z-index:50;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:var(--bg);border-inline-end:1px solid var(--bd)}
+#drawer.open{transform:none}
+#veil{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40;display:none}#veil.open{display:block}
+#toasts{position:fixed;bottom:calc(1rem + env(safe-area-inset-bottom,0px));right:1rem;z-index:80;display:flex;flex-direction:column;gap:.5rem}
+.toast{padding:.7rem 1rem;border-radius:.8rem;color:#fff;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.25);animation:tin .25s}
+@keyframes tin{from{opacity:0;transform:translateY(10px)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.drop{border:2px dashed var(--bd);border-radius:1rem;padding:2rem;text-align:center;cursor:pointer;transition:.2s}
+.drop.over{border-color:var(--or);background:color-mix(in srgb,var(--or) 10%,transparent)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:var(--bg)}
+</style>
+</head>
+<body>
+
+<!-- ===== Top navigation ===== -->
+<header class="top glass mx-2 mt-2 px-3 py-2 flex flex-wrap items-center gap-2" style="border-radius:1rem">
+  <div class="font-extrabold text-xl flex items-center gap-2"><span style="background:var(--or);color:#fff;width:2.2rem;height:2.2rem;border-radius:.6rem;display:inline-flex;align-items:center;justify-content:center;font-weight:800">د</span> دليلى <span style="color:var(--or)"></span></div>
+  <nav class="flex gap-1 mx-2" aria-label="التنقل الرئيسي">
+    <button class="tab on" data-view="store">الجرابات والإكسسوارات</button>
+    <button class="tab" data-view="admin">لوحة التحكم</button>
+  </nav>
+  <div id="storeTools" class="flex items-center gap-2 flex-1 min-w-[14rem]">
+    <input id="q" class="inp" placeholder="ابحث عن منتج أو موديل أو SKU…" aria-label="بحث">
+  </div>
+  <button id="cartBtn" class="btn btn-ac relative" aria-label="السلة">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h8.8a1 1 0 0 0 1-.8L20 7H6"/></svg>
+    السلة <span id="cartCount" class="badge" style="background:var(--pr);color:#fff">0</span>
+  </button>
+</header>
+
+<main class="max-w-7xl mx-auto p-3">
+
+<!-- ===== Storefront ===== -->
+<section id="v-store" class="grid gap-4 lg:grid-cols-[16rem_1fr]">
+  <aside class="glass p-4 h-fit lg:sticky lg:top-24 space-y-4">
+    <div><h3 class="font-bold mb-2">الفئة</h3><div id="fCat" class="flex lg:flex-col gap-2 overflow-x-auto"></div></div>
+    <div><h3 class="font-bold mb-2">توافق الهاتف</h3><select id="fModel" class="inp"></select></div>
+    <button id="reset" class="btn w-full">مسح الفلاتر</button>
+  </aside>
+  <div>
+    <div class="flex items-center justify-between mb-3"><h2 class="font-extrabold text-xl">المنتجات</h2><span id="resCount" class="mu text-sm"></span></div>
+    <div id="grid" class="grid gap-3 grid-cols-2 md:grid-cols-3 xl:grid-cols-4"></div>
+  </div>
+</section>
+
+<!-- ===== Admin ===== -->
+<section id="v-admin" class="hidden space-y-4">
+  <div id="stats" class="grid gap-3 grid-cols-2 lg:grid-cols-4"></div>
+
+  <div class="glass p-4">
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+      <h2 class="font-extrabold text-lg">استيراد المنتجات بالجملة</h2>
+      <button id="tpl" class="btn">تحميل نموذج CSV</button>
+    </div>
+    <div id="drop" class="drop" tabindex="0" role="button">
+      <div style="font-size:2.2rem">📄</div>
+      <p class="font-bold">اسحب ملف CSV هنا أو اضغط للاختيار</p>
+      <p class="mu text-sm">الأعمدة: sku, name, category, price, model, stock. لملفات Excel: احفظها بصيغة CSV UTF-8 أولاً.</p>
+      <input id="file" type="file" accept=".csv,text/csv" class="hidden">
+    </div>
+    <div id="prev" class="hidden mt-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+        <div id="prevSum" class="font-bold"></div>
+        <div class="flex items-center gap-2">
+          <div id="prog" class="hidden w-40 h-2 rounded-full overflow-hidden" style="background:var(--bd)"><div id="bar" style="height:100%;width:0;background:var(--or);transition:width .1s"></div></div>
+          <button id="doImport" class="btn btn-ac">استيراد المنتجات المحددة</button>
+        </div>
+      </div>
+      <div class="scroll-x" style="max-height:22rem;overflow-y:auto"><table class="tbl"><thead><tr><th><input type="checkbox" id="selAll" aria-label="تحديد الكل"></th><th>#</th><th>SKU</th><th>الاسم</th><th>الفئة</th><th>السعر</th><th>الموديل</th><th>المخزون</th><th>الحالة</th></tr></thead><tbody id="prevBody"></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="glass p-4">
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+      <h2 class="font-extrabold text-lg">إدارة المخزون</h2>
+      <input id="invQ" class="inp" style="max-width:16rem" placeholder="بحث في المخزون…" aria-label="بحث في المخزون">
+    </div>
+    <div class="scroll-x"><table class="tbl"><thead id="invHead"></thead><tbody id="invBody"></tbody></table></div>
+  </div>
+</section>
+</main>
+
+<!-- Cart drawer -->
+<div id="veil"></div>
+<aside id="drawer" aria-label="سلة التسوق">
+  <div class="p-4 flex items-center justify-between border-b" style="border-color:var(--bd)"><h2 class="font-extrabold text-lg">سلة التسوق</h2><button id="closeCart" class="btn" aria-label="إغلاق">✕</button></div>
+  <div id="cartItems" class="flex-1 overflow-y-auto p-3 space-y-2"></div>
+  <div id="cartFoot" class="p-4 border-t space-y-1" style="border-color:var(--bd)"></div>
+</aside>
+
+<div id="modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-3" style="background:rgba(0,0,0,.55)"><div id="modalBox" class="glass p-5 w-full max-w-md" style="background:var(--bg);max-height:90vh;overflow-y:auto"></div></div>
+<div id="toasts" aria-live="polite"></div>
+
+<script>
+/* =====================================================================
+   Mobile Accessories Store — SPA (vanilla JS, state in localStorage)
+   ===================================================================== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); // sanitise imported text
+const EGP = n => Number(n).toLocaleString('ar-EG') + ' ج.م';
+const KEY = 'mobshop_v1', LOW = 5, DELIVERY = 50, FREE_OVER = 1000;
+const ICONS = {'جرابات':'📱','اسكرينات':'🛡️','شواحن':'🔌','كابلات':'🔗','سماعات':'🎧'};
+
+/* ---------- State ---------- */
+const seed = () => [
+ ['CS-001','جراب سيليكون مضاد للصدمات','جرابات',250,'iPhone 15 Pro',40],['CS-002','جراب جلد فاخر MagSafe','جرابات',480,'iPhone 15 Pro',12],
+ ['CS-003','جراب شفاف مقوى','جرابات',180,'Samsung S24 Ultra',3],['CS-004','جراب حماية ثقيلة','جرابات',320,'Samsung S24 Ultra',25],
+ ['CS-005','جراب سيليكون ناعم','جرابات',150,'Xiaomi 13T',60],['SC-001','اسكرين زجاج 9H','اسكرينات',90,'iPhone 15 Pro',100],
+ ['SC-002','اسكرين خصوصية','اسكرينات',140,'Samsung S24 Ultra',18],['SC-003','اسكرين نانو مرن','اسكرينات',70,'Xiaomi 13T',0],
+ ['CH-001','شاحن سريع 33 وات','شواحن',380,'Xiaomi 13T',30],['CH-002','شاحن لاسلكي 15 وات','شواحن',520,'iPhone 15 Pro',4],
+ ['CH-003','شاحن 45 وات سامسونج','شواحن',650,'Samsung S24 Ultra',15],['CB-001','كابل USB-C إلى Lightning','كابلات',210,'iPhone 15 Pro',50],
+ ['CB-002','كابل USB-C مضفر 2 متر','كابلات',120,'Samsung S24 Ultra',70]
+].map(([sku,name,category,price,model,stock]) => ({sku,name,category,price,model,stock}));
+let S; try { S = JSON.parse(localStorage.getItem(KEY)); } catch(e) {}
+if (!S || !Array.isArray(S.products)) S = {products: seed(), orders: [], cart: []};
+S.cart = S.cart || []; S.orders = S.orders || [];
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} };
+const F = {q:'', cat:'الكل', model:'الكل'};
+let sortK = 'sku', sortD = 1, invQ = '';
+
+/* ---------- Toasts ---------- */
+function toast(msg, type='ok') {
+  const t = document.createElement('div'); t.className = 'toast';
+  t.style.background = type==='ok' ? '#0f9f6e' : type==='err' ? '#b91c1c' : '#1f3a7a';
+  t.textContent = msg; $('#toasts').append(t); setTimeout(() => t.remove(), 3200);
+}
+
+/* ---------- View switching (#admin deep link supported) ---------- */
+function view(v) {
+  ['store','admin'].forEach(x => $('#v-'+x).classList.toggle('hidden', x!==v));
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('on', b.dataset.view===v));
+  $('#storeTools').style.visibility = v==='store' ? 'visible' : 'hidden';
+  try { history.replaceState(null,'', v==='admin' ? '#admin' : '#'); } catch(e) {}
+  v==='admin' ? renderAdmin() : renderStore();
+}
+document.querySelectorAll('.tab').forEach(b => b.onclick = () => view(b.dataset.view));
+
+
+/* ---------- Storefront ---------- */
+const stockBadge = n => n<=0 ? '<span class="badge b-bad">نفد المخزون</span>' : n<=LOW ? `<span class="badge b-warn">كمية محدودة (${n})</span>` : '<span class="badge b-ok">متوفر</span>';
+const hue = s => [...s].reduce((a,c) => a + c.charCodeAt(0), 0) * 37 % 360;
+function renderStore() {
+  const cats = ['الكل', ...new Set(S.products.map(p => p.category))], models = ['الكل', ...new Set(S.products.map(p => p.model))];
+  $('#fCat').innerHTML = cats.map(c => `<button class="chip ${F.cat===c?'on':''}" data-c="${esc(c)}">${esc(c)}</button>`).join('');
+  $('#fModel').innerHTML = models.map(m => `<option ${F.model===m?'selected':''}>${esc(m)}</option>`).join('');
+  const q = F.q.trim().toLowerCase();
+  const list = S.products.filter(p => (F.cat==='الكل'||p.category===F.cat) && (F.model==='الكل'||p.model===F.model) && (!q || [p.name,p.model,p.sku,p.category].join(' ').toLowerCase().includes(q)));
+  $('#resCount').textContent = list.length + ' منتج';
+  $('#grid').innerHTML = list.length ? list.map(p => `
+    <article class="glass p-3 flex flex-col gap-2">
+      <div class="pimg" style="background:#fff1e4">${ICONS[p.category]||'📦'}</div>
+      <h3 class="font-bold leading-snug">${esc(p.name)}</h3>
+      <div class="mu text-sm">${esc(p.model)}</div>
+      <div class="flex items-center justify-between"><b style="color:var(--ac);font-size:1.05rem">${EGP(p.price)}</b>${stockBadge(p.stock)}</div>
+      <button class="btn btn-pr mt-auto" data-add="${esc(p.sku)}" ${p.stock<=0?'disabled':''}>أضف إلى السلة</button>
+    </article>`).join('') : '<p class="mu col-span-full p-8 text-center">لا توجد منتجات مطابقة. جرّب تغيير البحث أو مسح الفلاتر.</p>';
+  renderCart();
+}
+$('#q').oninput = e => { F.q = e.target.value; renderStore(); };
+$('#fCat').onclick = e => { const c = e.target.closest('[data-c]'); if (c) { F.cat = c.dataset.c; renderStore(); } };
+$('#fModel').onchange = e => { F.model = e.target.value; renderStore(); };
+$('#reset').onclick = () => { F.q=''; F.cat=F.model='الكل'; $('#q').value=''; renderStore(); };
+$('#grid').onclick = e => { const b = e.target.closest('[data-add]'); if (b) addToCart(b.dataset.add); };
+
+/* ---------- Cart ---------- */
+const prod = sku => S.products.find(p => p.sku===sku);
+function addToCart(sku) {
+  const p = prod(sku), it = S.cart.find(i => i.sku===sku);
+  if ((it?.qty||0) >= p.stock) return toast('وصلت للحد الأقصى المتاح في المخزون','info');
+  it ? it.qty++ : S.cart.push({sku, qty:1}); save(); renderCart(); toast('تمت إضافة المنتج إلى السلة');
+}
+function totals() {
+  const sub = S.cart.reduce((a,i) => a + (prod(i.sku)?.price||0)*i.qty, 0);
+  const fee = sub===0 ? 0 : sub>=FREE_OVER ? 0 : DELIVERY; return {sub, fee, total: sub+fee};
+}
+function renderCart() {
+  S.cart = S.cart.filter(i => prod(i.sku));
+  $('#cartCount').textContent = S.cart.reduce((a,i) => a+i.qty, 0);
+  $('#cartItems').innerHTML = S.cart.length ? S.cart.map(i => { const p = prod(i.sku); return `
+    <div class="glass p-3 flex gap-3 items-center">
+      <div class="pimg" style="width:3.2rem;font-size:1.6rem;aspect-ratio:1;background:#fff1e4">${ICONS[p.category]||'📦'}</div>
+      <div class="flex-1 min-w-0"><div class="font-bold text-sm">${esc(p.name)}</div><div class="mu text-xs">${esc(p.model)} · ${EGP(p.price)}</div>
+        <div class="flex items-center gap-2 mt-1"><button class="btn" style="padding:.1rem .6rem" data-q="${esc(i.sku)}" data-d="-1" aria-label="إنقاص">−</button><b>${i.qty}</b><button class="btn" style="padding:.1rem .6rem" data-q="${esc(i.sku)}" data-d="1" aria-label="زيادة">+</button></div></div>
+      <button class="btn" data-del="${esc(i.sku)}" aria-label="حذف">🗑️</button></div>`; }).join('')
+    : '<p class="mu text-center p-8">السلة فارغة. أضف منتجاً من المتجر لتبدأ.</p>';
+  const t = totals();
+  $('#cartFoot').innerHTML = `<div class="flex justify-between"><span class="mu">المجموع الفرعي</span><span>${EGP(t.sub)}</span></div>
+    <div class="flex justify-between"><span class="mu">التوصيل ${t.sub>0&&!t.fee?'(مجاني)':''}</span><span>${EGP(t.fee)}</span></div>
+    <div class="flex justify-between font-extrabold text-lg"><span>الإجمالي</span><span style="color:var(--ac)">${EGP(t.total)}</span></div>
+    <button id="checkout" class="btn btn-ac w-full mt-2" ${S.cart.length?'':'disabled'}>إتمام الطلب</button>`;
+  $('#checkout').onclick = openCheckout;
+}
+$('#cartItems').onclick = e => {
+  const q = e.target.closest('[data-q]'), d = e.target.closest('[data-del]');
+  if (q) { const it = S.cart.find(i => i.sku===q.dataset.q), p = prod(it.sku), n = it.qty + +q.dataset.d;
+    if (n<1) S.cart = S.cart.filter(i => i!==it); else if (n>p.stock) toast('لا توجد كمية أكبر في المخزون','info'); else it.qty = n; }
+  if (d) S.cart = S.cart.filter(i => i.sku!==d.dataset.del);
+  save(); renderCart();
+};
+const openCart = o => { $('#drawer').classList.toggle('open', o); $('#veil').classList.toggle('open', o); };
+$('#cartBtn').onclick = () => openCart(true); $('#closeCart').onclick = $('#veil').onclick = () => openCart(false);
+
+/* ---------- Modal + checkout ---------- */
+function modal(html) { $('#modalBox').innerHTML = html; $('#modal').classList.remove('hidden'); $('#modal').classList.add('flex'); }
+function closeModal() { $('#modal').classList.add('hidden'); $('#modal').classList.remove('flex'); }
+$('#modal').onclick = e => { if (e.target.id==='modal') closeModal(); };
+function openCheckout() {
+  const t = totals();
+  modal(`<h2 class="font-extrabold text-lg mb-3">إتمام الطلب</h2><div class="space-y-2">
+    <input id="cName" class="inp" placeholder="الاسم الكامل"><input id="cPhone" class="inp" placeholder="رقم الهاتف" inputmode="tel"><textarea id="cAddr" class="inp" rows="2" placeholder="عنوان التوصيل"></textarea>
+    <div class="flex justify-between font-bold pt-2"><span>الإجمالي (الدفع عند الاستلام)</span><span style="color:var(--ac)">${EGP(t.total)}</span></div></div>
+    <div class="flex gap-2 mt-4"><button id="confirmOrder" class="btn btn-ac flex-1">تأكيد الطلب</button><button class="btn" onclick="closeModal()">إلغاء</button></div>`);
+  $('#confirmOrder').onclick = () => {
+    if (!$('#cName').value.trim() || !/^[0-9+\s-]{8,}$/.test($('#cPhone').value.trim()) || !$('#cAddr').value.trim()) return toast('أكمل الاسم ورقم هاتف صحيح والعنوان','err');
+    S.cart.forEach(i => { prod(i.sku).stock -= i.qty; });
+    S.orders.push({id: Date.now(), total: t.total, items: S.cart.length, date: new Date().toISOString()});
+    S.cart = []; save(); closeModal(); openCart(false); renderStore(); toast('تم تأكيد طلبك بنجاح، شكراً لثقتك!');
+  };
+}
+
+/* ---------- Admin: stats ---------- */
+function renderAdmin() {
+  const cards = [['📦','إجمالي المنتجات',S.products.length],['🗂️','عدد الفئات',new Set(S.products.map(p=>p.category)).size],
+    ['⚠️','تنبيهات المخزون المنخفض',S.products.filter(p=>p.stock<=LOW).length],['💰','إجمالي المبيعات',EGP(S.orders.reduce((a,o)=>a+o.total,0))]];
+  $('#stats').innerHTML = cards.map(([i,l,v]) => `<div class="glass p-4"><div style="font-size:1.4rem">${i}</div><div class="mu text-sm">${l}</div><div class="font-extrabold text-2xl">${v}</div></div>`).join('');
+  renderInv();
+}
+
+/* ---------- Admin: inventory (search / sort / edit / delete) ---------- */
+const COLS = [['sku','SKU'],['name','الاسم'],['category','الفئة'],['price','السعر'],['model','الموديل'],['stock','المخزون']];
+function renderInv() {
+  $('#invHead').innerHTML = '<tr>' + COLS.map(([k,l]) => `<th class="sort" data-s="${k}">${l}${sortK===k?(sortD>0?' ▲':' ▼'):''}</th>`).join('') + '<th>إجراءات</th></tr>';
+  const q = invQ.toLowerCase();
+  const rows = S.products.filter(p => !q || Object.values(p).join(' ').toLowerCase().includes(q))
+    .sort((a,b) => (a[sortK]>b[sortK]?1:a[sortK]<b[sortK]?-1:0) * sortD);
+  $('#invBody').innerHTML = rows.map(p => `<tr><td>${esc(p.sku)}</td><td>${esc(p.name)}</td><td>${esc(p.category)}</td><td>${EGP(p.price)}</td><td>${esc(p.model)}</td>
+    <td>${p.stock} ${p.stock<=LOW?'<span class="badge b-warn">منخفض</span>':''}</td>
+    <td><button class="btn" style="padding:.2rem .6rem" data-edit="${esc(p.sku)}">تعديل</button> <button class="btn" style="padding:.2rem .6rem" data-rm="${esc(p.sku)}">حذف</button></td></tr>`).join('')
+    || '<tr><td colspan="7" class="mu">لا توجد نتائج.</td></tr>';
+}
+$('#invQ').oninput = e => { invQ = e.target.value; renderInv(); };
+$('#invHead').onclick = e => { const th = e.target.closest('[data-s]'); if (!th) return; sortD = sortK===th.dataset.s ? -sortD : 1; sortK = th.dataset.s; renderInv(); };
+$('#invBody').onclick = e => {
+  const rm = e.target.closest('[data-rm]'), ed = e.target.closest('[data-edit]');
+  if (rm && confirm('هل تريد حذف هذا المنتج نهائياً؟')) { S.products = S.products.filter(p => p.sku!==rm.dataset.rm); save(); renderAdmin(); toast('تم حذف المنتج','info'); }
+  if (ed) { const p = prod(ed.dataset.edit);
+    modal(`<h2 class="font-extrabold text-lg mb-3">تعديل المنتج ${esc(p.sku)}</h2><div class="space-y-2">
+      <input id="eN" class="inp" value="${esc(p.name)}"><input id="eC" class="inp" value="${esc(p.category)}"><input id="eM" class="inp" value="${esc(p.model)}">
+      <input id="eP" class="inp" type="number" min="1" value="${p.price}"><input id="eS" class="inp" type="number" min="0" value="${p.stock}"></div>
+      <div class="flex gap-2 mt-4"><button id="eSave" class="btn btn-ac flex-1">حفظ التعديلات</button><button class="btn" onclick="closeModal()">إلغاء</button></div>`);
+    $('#eSave').onclick = () => { const pr = +$('#eP').value, st = +$('#eS').value;
+      if (!$('#eN').value.trim() || !$('#eC').value.trim() || !$('#eM').value.trim() || !(pr>0) || !Number.isInteger(st) || st<0) return toast('تحقق من القيم المدخلة','err');
+      Object.assign(p, {name:$('#eN').value.trim(), category:$('#eC').value.trim(), model:$('#eM').value.trim(), price:pr, stock:st});
+      save(); closeModal(); renderAdmin(); toast('تم حفظ التعديلات'); }; }
+};
+
+/* ---------- Admin: CSV import engine ---------- */
+// Minimal RFC-4180 parser: quotes, escaped quotes, BOM, comma or semicolon delimiter
+function parseCSV(t) {
+  t = t.replace(/^\uFEFF/, ''); const l1 = t.split(/\r?\n/)[0];
+  const d = (l1.match(/;/g)||[]).length > (l1.match(/,/g)||[]).length ? ';' : ',';
+  const out = []; let row = [], c = '', q = false;
+  for (let i = 0; i < t.length; i++) { const ch = t[i];
+    if (q) { if (ch==='"') { if (t[i+1]==='"') { c += '"'; i++; } else q = false; } else c += ch; }
+    else if (ch==='"') q = true;
+    else if (ch===d) { row.push(c); c = ''; }
+    else if (ch==='\n' || ch==='\r') { if (ch==='\r' && t[i+1]==='\n') i++; row.push(c); out.push(row); row = []; c = ''; }
+    else c += ch; }
+  if (c || row.length) { row.push(c); out.push(row); }
+  return out.filter(r => r.some(x => x.trim()));
+}
+let rows = []; // {sel, d:{...}, err}
+function validate(d, seen) {
+  if (!d.sku) return 'كود SKU مفقود';
+  if (seen.has(d.sku)) return 'SKU مكرر في الملف';
+  if (!d.name) return 'اسم المنتج مفقود';
+  if (!d.category) return 'الفئة مفقودة';
+  if (!(d.price > 0) || isNaN(d.price)) return 'سعر غير صحيح';
+  if (!d.model) return 'الموديل مفقود';
+  if (!Number.isInteger(d.stock) || d.stock < 0) return 'مخزون غير صحيح';
+  return '';
+}
+function handleFile(f) {
+  if (!f) return;
+  if (!/\.csv$/i.test(f.name)) return toast('الملف يجب أن يكون بصيغة CSV. احفظ ملف Excel بصيغة CSV UTF-8','err');
+  const r = new FileReader();
+  r.onload = () => {
+    const data = parseCSV(String(r.result)); if (data.length < 2) return toast('الملف فارغ أو لا يحتوي على صفوف بيانات','err');
+    const h = data[0].map(x => x.trim().toLowerCase()), need = ['sku','name','category','price','model','stock'];
+    const miss = need.filter(k => !h.includes(k));
+    if (miss.length) return toast('أعمدة ناقصة في الملف: ' + miss.join(', '),'err');
+    const seen = new Set();
+    rows = data.slice(1).map(r => { const o = {}; h.forEach((k,i) => o[k] = (r[i]||'').trim());
+      const d = {sku:o.sku, name:o.name, category:o.category, price:parseFloat(o.price), model:o.model, stock:o.stock===''?NaN:Number(o.stock)};
+      const err = validate(d, seen); if (d.sku) seen.add(d.sku); return {sel: !err, d, err, raw: o}; });
+    renderPrev(); const bad = rows.filter(x => x.err).length;
+    bad ? toast(`تم رفع الملف، وتم اكتشاف ${bad} صف به أخطاء`,'err') : toast('تم رفع الملف بنجاح');
+  };
+  r.readAsText(f, 'UTF-8');
+}
+function renderPrev() {
+  $('#prev').classList.remove('hidden');
+  $('#prevBody').innerHTML = rows.map((x,i) => `<tr style="${x.err?'opacity:.8':''}"><td><input type="checkbox" data-i="${i}" ${x.sel?'checked':''} ${x.err?'disabled':''} aria-label="تحديد الصف ${i+1}"></td><td>${i+1}</td>
+    <td>${esc(x.raw.sku)}</td><td>${esc(x.raw.name)}</td><td>${esc(x.raw.category)}</td><td>${esc(x.raw.price)}</td><td>${esc(x.raw.model)}</td><td>${esc(x.raw.stock)}</td>
+    <td>${x.err ? `<span class="badge b-bad">${x.err}</span>` : prod(x.d.sku) ? '<span class="badge b-warn">صالح (تحديث منتج موجود)</span>' : '<span class="badge b-ok">صالح للإضافة</span>'}</td></tr>`).join('');
+  const n = rows.filter(x => x.sel).length;
+  $('#prevSum').textContent = `${rows.length} صف · ${rows.filter(x=>!x.err).length} صالح · ${rows.filter(x=>x.err).length} به أخطاء · ${n} محدد`;
+  $('#doImport').disabled = !n; $('#selAll').checked = n>0 && n===rows.filter(x=>!x.err).length;
+}
+$('#prevBody').onchange = e => { const i = e.target.dataset.i; if (i!==undefined) { rows[i].sel = e.target.checked; renderPrev(); } };
+$('#selAll').onchange = e => { rows.forEach(x => { if (!x.err) x.sel = e.target.checked; }); renderPrev(); };
+$('#doImport').onclick = () => {
+  const todo = rows.filter(x => x.sel && !x.err); if (!todo.length) return;
+  $('#doImport').disabled = true; $('#prog').classList.remove('hidden'); let i = 0, added = 0, upd = 0;
+  (function step() { // chunked so the progress bar can paint
+    todo.slice(i, i+10).forEach(x => { const p = prod(x.d.sku); p ? (Object.assign(p, x.d), upd++) : (S.products.push({...x.d}), added++); });
+    i += 10; $('#bar').style.width = Math.min(100, i/todo.length*100) + '%';
+    if (i < todo.length) return setTimeout(step, 60);
+    save(); rows = []; $('#prev').classList.add('hidden'); $('#prog').classList.add('hidden'); $('#bar').style.width = '0';
+    $('#file').value = ''; renderAdmin(); toast(`تم الاستيراد: ${added} منتج جديد، ${upd} تم تحديثه`);
+  })();
+};
+const drop = $('#drop');
+drop.onclick = () => $('#file').click();
+drop.onkeydown = e => { if (e.key==='Enter' || e.key===' ') $('#file').click(); };
+$('#file').onchange = e => handleFile(e.target.files[0]);
+['dragover','dragenter'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => handleFile(e.dataTransfer.files[0]));
+
+/* Sample template (UTF-8 BOM so Excel shows Arabic correctly) */
+$('#tpl').onclick = () => {
+  const csv = '\uFEFFsku,name,category,price,model,stock\n' +
+    'CS-101,جراب سيليكون أسود,جرابات,200,iPhone 15 Pro,30\nSC-101,اسكرين زجاج مضاد للخدش,اسكرينات,85,Samsung S24 Ultra,80\n' +
+    'CH-101,شاحن سريع 20 وات,شواحن,300,Xiaomi 13T,25\nCB-101,كابل USB-C مضفر,كابلات,110,Samsung S24 Ultra,60\n' +
+    'CS-102,"جراب مع حلقة, لون أزرق",جرابات,170,Xiaomi 13T,0\n';
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'}));
+  a.download = 'products-template.csv'; a.click(); URL.revokeObjectURL(a.href); toast('تم تحميل نموذج CSV','info');
+};
+
+/* ---------- Boot ---------- */
+view(location.hash === '#admin' ? 'admin' : 'store');
+</script>
+</body>
+</html>
