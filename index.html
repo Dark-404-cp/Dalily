@@ -1,383 +1,772 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>متجر إكسسوارات الموبايل</title>
-<script src="https://cdn.tailwindcss.com/3.4.17"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-<style>
-/* ===== Design tokens (light default, dark via OS or toggle) ===== */
-:root{--bg:#f6f8fb;--card:rgba(255,255,255,.92);--tx:#0f1f3d;--mu:#6b7a90;--bd:rgba(15,31,61,.1);--pr:#0f1f3d;--pr2:#1b2f57;--ac:#1fa971;--or:#ff7a00;--ac-tx:#fff;--warn:#b45309;--bad:#b91c1c;--in:rgba(255,255,255,.9);color-scheme:light}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>دليلى — Dalily</title>
+    <style>
+        :root {
+            --or: #FF7A00;
+            --navy: #0F1F3D;
+            --nb: #0F1F3D;
+            --gr: #1FA971;
+            --bg: #F6F8FB;
+            --card: #fff;
+            --tx: #0F1F3D;
+            --mu: #6b7690;
+            --ln: #e3e8f0;
+            --red: #d64545;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
 
+        * {
+            box-sizing: border-box
+        }
 
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{font-family:'Tajawal',Tahoma,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;
- background-image:radial-gradient(50rem 30rem at 95% 30%,color-mix(in srgb,var(--or) 10%,transparent),transparent);background-attachment:fixed}
-.glass{background:#fff;border:1px solid var(--bd);box-shadow:0 4px 18px rgba(15,31,61,.06);border-radius:1rem}
-.mu{color:var(--mu)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.55rem 1rem;border-radius:.75rem;font-weight:700;border:1px solid var(--bd);background:var(--in);color:var(--tx);cursor:pointer;transition:transform .15s,opacity .15s}
-.btn:hover{transform:translateY(-1px)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
-.btn-pr{background:var(--pr);color:#fff;border-color:transparent}
-.btn-ac{background:var(--or);color:#fff;border-color:transparent}
-.inp{width:100%;padding:.55rem .8rem;border-radius:.75rem;border:1px solid var(--bd);background:var(--in);color:var(--tx);outline:none}
-.inp:focus,.btn:focus-visible,.chip:focus-visible,button:focus-visible{outline:2px solid var(--or);outline-offset:2px}
-.chip{padding:.35rem .9rem;border-radius:999px;border:1px solid var(--bd);background:var(--in);cursor:pointer;font-weight:500;white-space:nowrap}
-.chip.on{background:var(--or);color:#fff;border-color:transparent}
-.tab{padding:.5rem 1.1rem;border-radius:.75rem;font-weight:700;cursor:pointer}.tab.on{background:var(--pr);color:#fff}
-.badge{display:inline-block;padding:.15rem .6rem;border-radius:999px;font-size:.75rem;font-weight:700}
-.b-ok{background:color-mix(in srgb,var(--ac) 22%,transparent);color:var(--ac)}
-.b-bad{background:color-mix(in srgb,var(--bad) 20%,transparent);color:var(--bad)}
-.b-warn{background:color-mix(in srgb,var(--warn) 22%,transparent);color:var(--warn)}
-.tbl{width:100%;border-collapse:collapse;font-size:.9rem}.tbl th,.tbl td{padding:.55rem .7rem;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}
-.tbl th{color:var(--mu);font-weight:700;cursor:default}.tbl th.sort{cursor:pointer}
-.scroll-x{overflow-x:auto;max-width:100%}
-.pimg{aspect-ratio:4/3;border-radius:.8rem;display:flex;align-items:center;justify-content:center;font-size:3.6rem}
-#drawer{position:fixed;top:0;bottom:0;left:0;width:min(24rem,100%);transform:translateX(-105%);transition:transform .3s;z-index:50;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:var(--bg);border-inline-end:1px solid var(--bd)}
-#drawer.open{transform:none}
-#veil{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40;display:none}#veil.open{display:block}
-#toasts{position:fixed;bottom:calc(1rem + env(safe-area-inset-bottom,0px));right:1rem;z-index:80;display:flex;flex-direction:column;gap:.5rem}
-.toast{padding:.7rem 1rem;border-radius:.8rem;color:#fff;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.25);animation:tin .25s}
-@keyframes tin{from{opacity:0;transform:translateY(10px)}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-.drop{border:2px dashed var(--bd);border-radius:1rem;padding:2rem;text-align:center;cursor:pointer;transition:.2s}
-.drop.over{border-color:var(--or);background:color-mix(in srgb,var(--or) 10%,transparent)}
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:var(--bg)}
-</style>
+        html {
+            scroll-padding-top: env(safe-area-inset-top, 0px)
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--tx);
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 100% 0, rgba(255, 122, 0, .14), transparent 45%)
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--or)
+        }
+
+        .logo i {
+            font-style: normal;
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
+            background: var(--or);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-size: 1.5rem
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--card);
+            border-bottom: 1px solid var(--ln);
+            flex-wrap: wrap
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 18px
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--ln);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 16px
+        }
+
+        h2,
+        h3 {
+            margin: 0 0 12px
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--ln);
+            border-radius: 9px;
+            font: inherit;
+            background: var(--bg);
+            color: var(--tx);
+            margin-bottom: 10px
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid var(--or);
+            border-color: var(--or)
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+            border: 0;
+            border-radius: 9px;
+            padding: 9px 16px;
+            font-weight: 600
+        }
+
+        .b-or {
+            background: var(--or);
+            color: #fff
+        }
+
+        .b-nv {
+            background: var(--nb);
+            color: #fff
+        }
+
+        .b-gr {
+            background: var(--gr);
+            color: #fff
+        }
+
+        .b-rd {
+            background: var(--red);
+            color: #fff
+        }
+
+        .b-ln {
+            background: transparent;
+            border: 1px solid var(--ln);
+            color: var(--tx)
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center
+        }
+
+        .row>* {
+            flex: 1
+        }
+
+        .login {
+            max-width: 420px;
+            margin: 6vh auto;
+            text-align: center
+        }
+
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin: 14px 0
+        }
+
+        .tabs button {
+            flex: 1;
+            background: var(--bg);
+            color: var(--tx)
+        }
+
+        .tabs button.on {
+            background: var(--nb);
+            color: #fff
+        }
+
+        .demo {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 8px
+        }
+
+        .demo button {
+            font-size: .8rem;
+            padding: 6px 10px
+        }
+
+        .err {
+            color: var(--red);
+            min-height: 1.2em;
+            font-size: .9rem
+        }
+
+        .chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 10px 0
+        }
+
+        .chips button {
+            background: var(--card);
+            border: 1px solid var(--ln);
+            color: var(--tx);
+            border-radius: 20px
+        }
+
+        .chips button.on {
+            background: var(--nb);
+            color: #fff
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 14px
+        }
+
+        .p {
+            background: var(--card);
+            border: 1px solid var(--ln);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column
+        }
+
+        .p .im {
+            height: 130px;
+            display: grid;
+            place-items: center;
+            font-size: 3.2rem;
+            background: linear-gradient(135deg, #fff1e2, #e8eefb)
+        }
+
+        .p .im img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .p .bd {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1
+        }
+
+        .price,
+        .ok {
+            color: var(--gr);
+            font-weight: 700
+        }
+
+        .no {
+            color: var(--red);
+            font-weight: 700
+        }
+
+        .mu {
+            color: var(--mu);
+            font-size: .85rem
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px
+        }
+
+        .stat {
+            background: var(--card);
+            border: 1px solid var(--ln);
+            border-radius: 14px;
+            padding: 16px;
+            border-inline-start: 5px solid var(--nb)
+        }
+
+        .stat b {
+            display: block;
+            font-size: 1.7rem;
+            color: var(--or)
+        }
+
+        .tw {
+            overflow-x: auto
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 560px
+        }
+
+        th,
+        td {
+            padding: 9px;
+            text-align: start;
+            border-bottom: 1px solid var(--ln)
+        }
+
+        th {
+            color: var(--mu);
+            font-size: .85rem
+        }
+
+        .sw {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px
+        }
+
+        .sw input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            margin: 0
+        }
+
+        .sw span {
+            position: absolute;
+            inset: 0;
+            background: #b5bccb;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .sw span:before {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            top: 3px;
+            inset-inline-start: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: .2s
+        }
+
+        .sw input:checked+span {
+            background: var(--gr)
+        }
+
+        .sw input:checked+span:before {
+            inset-inline-start: 23px
+        }
+
+        .two {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        @media(max-width:760px) {
+            .two {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            display: none;
+            place-items: center;
+            z-index: 50;
+            padding: 16px
+        }
+
+        .modal.show {
+            display: grid
+        }
+
+        .modal .card {
+            max-width: 440px;
+            width: 100%;
+            max-height: 85vh;
+            overflow: auto;
+            margin: 0
+        }
+
+        .ci {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--ln)
+        }
+
+        .tag {
+            padding: 2px 9px;
+            border-radius: 12px;
+            font-size: .78rem;
+            font-weight: 700;
+            color: #fff
+        }
+
+        .pending {
+            background: var(--or)
+        }
+
+        .approved {
+            background: var(--gr)
+        }
+
+        .rejected {
+            background: var(--red)
+        }
+
+        .hide {
+            display: none !important
+        }
+
+        .prev {
+            max-height: 90px;
+            border-radius: 8px;
+            margin-bottom: 8px
+        }
+
+        .uh {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 20px;
+            background: var(--card);
+            border-bottom: 1px solid var(--ln);
+            box-shadow: 0 2px 10px rgba(15, 31, 61, .05);
+            border-radius: 0 0 18px 18px
+        }
+
+        .uh .srch {
+            flex: 1;
+            margin: 0;
+            border-radius: 12px;
+            background: #fff
+        }
+
+        .pill {
+            background: var(--navy);
+            color: #fff;
+            padding: 11px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            white-space: nowrap
+        }
+
+        .dash {
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap
+        }
+
+        .cart {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 18px;
+            border-radius: 14px;
+            white-space: nowrap
+        }
+
+        .cnt {
+            background: var(--navy);
+            color: #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: grid;
+            place-items: center;
+            font-size: .8rem
+        }
+
+        .shop {
+            display: grid;
+            grid-template-columns: 290px 1fr;
+            gap: 24px;
+            align-items: start
+        }
+
+        .side {
+            background: #fff;
+            border: 1px solid var(--ln);
+            border-radius: 18px;
+            padding: 20px;
+            position: sticky;
+            top: 12px
+        }
+
+        .side h4 {
+            margin: 0 0 12px
+        }
+
+        .side .cb {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid var(--ln);
+            background: #fff;
+            color: var(--navy);
+            border-radius: 24px;
+            padding: 11px
+        }
+
+        .side .cb.on {
+            background: var(--or);
+            border-color: var(--or);
+            color: #fff
+        }
+
+        .ttl {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 14px
+        }
+
+        .ttl h2 {
+            margin: 0
+        }
+
+        .g4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 16px
+        }
+
+        .pc {
+            background: #fff;
+            border: 1px solid var(--ln);
+            border-radius: 18px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .pc .im {
+            height: 190px;
+            border-radius: 14px;
+            background: #FFF0E2;
+            display: grid;
+            place-items: center;
+            font-size: 4rem;
+            overflow: hidden
+        }
+
+        .pc .im img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .pc .pr {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            min-height: 34px
+        }
+
+        .pc .pr .price {
+            font-size: 1.15rem
+        }
+
+        .bd2 {
+            font-size: .78rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 14px
+        }
+
+        .bd2.in {
+            background: #dff5ec;
+            color: var(--gr)
+        }
+
+        .bd2.low {
+            background: #ffe9d3;
+            color: var(--or)
+        }
+
+        .bd2.out {
+            background: #fde2e2;
+            color: var(--red)
+        }
+
+        .pc button.b-nv {
+            border-radius: 12px;
+            padding: 13px;
+            margin-top: auto
+        }
+
+        @media(max-width:820px) {
+            .shop {
+                grid-template-columns: 1fr
+            }
+
+            .side {
+                position: static
+            }
+
+            .uh {
+                flex-wrap: wrap
+            }
+
+            .uh .srch {
+                order: 9;
+                flex-basis: 100%
+            }
+        }
+    </style>
 </head>
+
 <body>
-
-<!-- ===== Top navigation ===== -->
-<header class="top glass mx-2 mt-2 px-3 py-2 flex flex-wrap items-center gap-2" style="border-radius:1rem">
-  <div class="font-extrabold text-xl flex items-center gap-2"><span style="background:var(--or);color:#fff;width:2.2rem;height:2.2rem;border-radius:.6rem;display:inline-flex;align-items:center;justify-content:center;font-weight:800">د</span> دليلى <span style="color:var(--or)"></span></div>
-  <nav class="flex gap-1 mx-2" aria-label="التنقل الرئيسي">
-    <button class="tab on" data-view="store">الجرابات والإكسسوارات</button>
-    <button class="tab" data-view="admin">لوحة التحكم</button>
-  </nav>
-  <div id="storeTools" class="flex items-center gap-2 flex-1 min-w-[14rem]">
-    <input id="q" class="inp" placeholder="ابحث عن منتج أو موديل أو SKU…" aria-label="بحث">
-  </div>
-  <button id="cartBtn" class="btn btn-ac relative" aria-label="السلة">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h8.8a1 1 0 0 0 1-.8L20 7H6"/></svg>
-    السلة <span id="cartCount" class="badge" style="background:var(--pr);color:#fff">0</span>
-  </button>
-</header>
-
-<main class="max-w-7xl mx-auto p-3">
-
-<!-- ===== Storefront ===== -->
-<section id="v-store" class="grid gap-4 lg:grid-cols-[16rem_1fr]">
-  <aside class="glass p-4 h-fit lg:sticky lg:top-24 space-y-4">
-    <div><h3 class="font-bold mb-2">الفئة</h3><div id="fCat" class="flex lg:flex-col gap-2 overflow-x-auto"></div></div>
-    <div><h3 class="font-bold mb-2">توافق الهاتف</h3><select id="fModel" class="inp"></select></div>
-    <button id="reset" class="btn w-full">مسح الفلاتر</button>
-  </aside>
-  <div>
-    <div class="flex items-center justify-between mb-3"><h2 class="font-extrabold text-xl">المنتجات</h2><span id="resCount" class="mu text-sm"></span></div>
-    <div id="grid" class="grid gap-3 grid-cols-2 md:grid-cols-3 xl:grid-cols-4"></div>
-  </div>
-</section>
-
-<!-- ===== Admin ===== -->
-<section id="v-admin" class="hidden space-y-4">
-  <div id="stats" class="grid gap-3 grid-cols-2 lg:grid-cols-4"></div>
-
-  <div class="glass p-4">
-    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-      <h2 class="font-extrabold text-lg">استيراد المنتجات بالجملة</h2>
-      <button id="tpl" class="btn">تحميل نموذج CSV</button>
+    <div id="app"></div>
+    <div class="modal" id="modal">
+        <div class="card" id="mbody"></div>
     </div>
-    <div id="drop" class="drop" tabindex="0" role="button">
-      <div style="font-size:2.2rem">📄</div>
-      <p class="font-bold">اسحب ملف CSV هنا أو اضغط للاختيار</p>
-      <p class="mu text-sm">الأعمدة: sku, name, category, price, model, stock. لملفات Excel: احفظها بصيغة CSV UTF-8 أولاً.</p>
-      <input id="file" type="file" accept=".csv,text/csv" class="hidden">
-    </div>
-    <div id="prev" class="hidden mt-4">
-      <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-        <div id="prevSum" class="font-bold"></div>
-        <div class="flex items-center gap-2">
-          <div id="prog" class="hidden w-40 h-2 rounded-full overflow-hidden" style="background:var(--bd)"><div id="bar" style="height:100%;width:0;background:var(--or);transition:width .1s"></div></div>
-          <button id="doImport" class="btn btn-ac">استيراد المنتجات المحددة</button>
-        </div>
-      </div>
-      <div class="scroll-x" style="max-height:22rem;overflow-y:auto"><table class="tbl"><thead><tr><th><input type="checkbox" id="selAll" aria-label="تحديد الكل"></th><th>#</th><th>SKU</th><th>الاسم</th><th>الفئة</th><th>السعر</th><th>الموديل</th><th>المخزون</th><th>الحالة</th></tr></thead><tbody id="prevBody"></tbody></table></div>
-    </div>
-  </div>
+    <script>
+        /* ===== State (in-memory demo data) ===== */
+        const CATS = ['جرابات', 'اسكرينات', 'شواحن', 'كابلات'], PHONES = ['iPhone 15 Pro', 'Samsung S24 Ultra', 'Xiaomi 13T'];
+        const EM = { 'جرابات': '📱', 'اسكرينات': '🛡️', 'شواحن': '🔌', 'كابلات': '🔗' };
+        const S = {
+            role: null, name: '', q: '', cat: 'الكل', ph: 'الكل', cart: [], mode: 'login', myStore: 's1', csv: [], img: '',
+            stores: [{ id: 's1', name: 'الجرابات والإكسسوارات', area: 'الفيوم', status: 'approved' }, { id: 's2', name: 'عالم الشواحن', area: 'القاهرة', status: 'approved' }, { id: 's3', name: 'ستايل كيس', area: 'الجيزة', status: 'pending' }],
+            products: [
+                { id: 1, store: 's1', name: 'جراب سيليكون مضاد للصدمات', cat: 'جرابات', phone: 'iPhone 15 Pro', price: 250, desc: '', q: 20, stock: true, hidden: false },
+                { id: 2, store: 's1', name: 'جراب جلد فاخر MagSafe', cat: 'جرابات', phone: 'iPhone 15 Pro', price: 480, desc: '', q: 20, stock: true, hidden: false },
+                { id: 3, store: 's1', name: 'جراب شفاف مقوى', cat: 'جرابات', phone: 'Samsung S24 Ultra', price: 180, desc: '', q: 3, stock: true, hidden: false },
+                { id: 4, store: 's1', name: 'جراب حماية ثقيلة', cat: 'جرابات', phone: 'Samsung S24 Ultra', price: 320, desc: '', q: 20, stock: true, hidden: false },
+                { id: 5, store: 's1', name: 'جراب سيليكون ناعم', cat: 'جرابات', phone: 'Xiaomi 13T', price: 150, desc: '', q: 20, stock: true, hidden: false },
+                { id: 6, store: 's1', name: 'اسكرين زجاج 9H', cat: 'اسكرينات', phone: 'iPhone 15 Pro', price: 90, desc: '', q: 20, stock: true, hidden: false },
+                { id: 7, store: 's1', name: 'اسكرين خصوصية', cat: 'اسكرينات', phone: 'Samsung S24 Ultra', price: 140, desc: '', q: 20, stock: true, hidden: false },
+                { id: 8, store: 's0', name: 'اسكرين نانو مرن', cat: 'اسكرينات', phone: 'Xiaomi 13T', price: 70, desc: '', q: 0, stock: false, hidden: false },
+                { id: 9, store: 's2', name: 'شاحن سريع 33 واط', cat: 'شواحن', phone: 'Samsung S24 Ultra', price: 220, desc: '', q: 20, stock: true, hidden: false },
+                { id: 10, store: 's2', name: 'شاحن لاسلكي MagSafe', cat: 'شواحن', phone: 'iPhone 15 Pro', price: 390, desc: '', q: 20, stock: true, hidden: false },
+                { id: 11, store: 's2', name: 'شاحن سيارة مزدوج', cat: 'شواحن', phone: 'Xiaomi 13T', price: 130, desc: '', q: 20, stock: true, hidden: false },
+                { id: 12, store: 's2', name: 'كابل Type-C مقوى', cat: 'كابلات', phone: 'Samsung S24 Ultra', price: 85, desc: '', q: 20, stock: true, hidden: false },
+                { id: 13, store: 's2', name: 'كابل Lightning 1م', cat: 'كابلات', phone: 'iPhone 15 Pro', price: 110, desc: '', q: 20, stock: true, hidden: false },
+                { id: 14, store: 's3', name: 'جراب جلد كلاسيك', cat: 'جرابات', phone: 'iPhone 15 Pro', price: 200, desc: '', q: 20, stock: true, hidden: false }],
+            sales: 0, nid: 10
+        };
+        const $ = s => document.querySelector(s);
+        const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const storeOf = id => S.stores.find(s => s.id === id) || { name: '—', status: 'rejected' };
+        const visible = p => !p.hidden && storeOf(p.store).status === 'approved';
+        const icon = p => p.img ? `<img src="${p.img}" alt="">` : (p.e || EM[p.cat] || '📦');
+        const fmt = n => Number(n).toLocaleString('ar-EG') + ' ج.م';
 
-  <div class="glass p-4">
-    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-      <h2 class="font-extrabold text-lg">إدارة المخزون</h2>
-      <input id="invQ" class="inp" style="max-width:16rem" placeholder="بحث في المخزون…" aria-label="بحث في المخزون">
-    </div>
-    <div class="scroll-x"><table class="tbl"><thead id="invHead"></thead><tbody id="invBody"></tbody></table></div>
-  </div>
-</section>
-</main>
+        /* ===== Auth ===== */
+        const USERS = { user: ['user', 'user'], 'Store Owner': ['Store Owner', 'Store Owner'], admin: ['admin', 'admin'] };
+        function login() {
+            const u = $('#u').value.trim(), p = $('#pw').value, hit = USERS[u];
+            if (S.mode === 'reg') {
+                if (!u || !p || !$('#nm').value.trim()) { $('#err').textContent = 'أكمل جميع الحقول'; return }
+                USERS[u] = [p, 'user']; S.role = 'user'; S.name = $('#nm').value.trim(); return render()
+            }
+            if (!hit || hit[0] !== p) { $('#err').textContent = 'بيانات الدخول غير صحيحة'; return }
+            const r = hit[1]; S.role = r === 'user' ? 'user' : r === 'Store Owner' ? 'store' : 'admin'; S.name = u; render();
+        }
+        function logout() { S.role = null; S.cart = []; render() }
+        function demo(u, p) { $('#u').value = u; $('#pw').value = p; login() }
+        function setMode(m) { S.mode = m; render() }
 
-<!-- Cart drawer -->
-<div id="veil"></div>
-<aside id="drawer" aria-label="سلة التسوق">
-  <div class="p-4 flex items-center justify-between border-b" style="border-color:var(--bd)"><h2 class="font-extrabold text-lg">سلة التسوق</h2><button id="closeCart" class="btn" aria-label="إغلاق">✕</button></div>
-  <div id="cartItems" class="flex-1 overflow-y-auto p-3 space-y-2"></div>
-  <div id="cartFoot" class="p-4 border-t space-y-1" style="border-color:var(--bd)"></div>
-</aside>
+        /* ===== Views ===== */
+        function viewLogin() {
+            return `<div class="card login"><span class="logo"><i>د</i>دليلى</span>
+ <p class="mu">سوق محلي ومنصة تجارة إلكترونية</p>
+ <div class="tabs"><button class="${S.mode === 'login' ? 'on' : ''}" onclick="setMode('login')">تسجيل الدخول</button><button class="${S.mode === 'reg' ? 'on' : ''}" onclick="setMode('reg')">حساب عميل جديد</button></div>
+ ${S.mode === 'reg' ? '<input id="nm" placeholder="الاسم الكامل">' : ''}
+ <input id="u" placeholder="اسم المستخدم" autocomplete="username"><input id="pw" type="password" placeholder="كلمة المرور" onkeydown="if(event.key==='Enter')login()">
+ <div class="err" id="err"></div><button class="b-or" style="width:100%" onclick="login()">${S.mode === 'reg' ? 'إنشاء حساب' : 'دخول'}</button>
+ <p class="mu">بيانات تجريبية (اضغط للدخول):</p>
+ <div class="demo"><button class="b-ln" onclick="demo('user','user')">user</button><button class="b-ln" onclick="demo('Store Owner','Store Owner')">Store Owner</button><button class="b-ln" onclick="demo('admin','admin')">admin</button></div></div>`}
 
-<div id="modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-3" style="background:rgba(0,0,0,.55)"><div id="modalBox" class="glass p-5 w-full max-w-md" style="background:var(--bg);max-height:90vh;overflow-y:auto"></div></div>
-<div id="toasts" aria-live="polite"></div>
+        function head(t, extra = '') { return `<header><span class="logo"><i>د</i>دليلى</span><b>${t} — ${esc(S.name)}</b><div class="row" style="flex:none">${extra}<button class="b-ln" onclick="logout()">خروج</button></div></header>` }
 
-<script>
-/* =====================================================================
-   Mobile Accessories Store — SPA (vanilla JS, state in localStorage)
-   ===================================================================== */
-const $ = s => document.querySelector(s);
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); // sanitise imported text
-const EGP = n => Number(n).toLocaleString('ar-EG') + ' ج.م';
-const KEY = 'mobshop_v1', LOW = 5, DELIVERY = 50, FREE_OVER = 1000;
-const ICONS = {'جرابات':'📱','اسكرينات':'🛡️','شواحن':'🔌','كابلات':'🔗','سماعات':'🎧'};
+        const list = () => { const q = S.q.trim().toLowerCase(); return S.products.filter(p => visible(p) && (S.cat === 'الكل' || p.cat === S.cat) && (S.ph === 'الكل' || p.phone === S.ph) && (p.name + ' ' + p.phone).toLowerCase().includes(q)) };
+        const badge = p => !p.stock ? '<span class="bd2 out">نفد المنتج</span>' : p.q <= 5 ? `<span class="bd2 low">كمية محدودة (${Number(p.q).toLocaleString('ar-EG')})</span>` : '<span class="bd2 in">متوفر</span>';
+        function viewUser() {
+            return `<header class="uh"><span class="logo"><i>د</i>دليلى</span><span 
+ <input id="q" class="srch" placeholder="ابحث عن منتج أو موديل أو SKU..." value="${esc(S.q)}" oninput="S.q=this.value;grid()">
+ <button class="b-or cart" onclick="openCart()"><span class="cnt" id="cc">${S.cart.length}</span>السلة 🛒</button></header>
+ <main><div class="shop"><aside class="side"><h4>الفئة</h4>${['الكل', ...CATS].map(c => `<button class="cb ${S.cat === c ? 'on' : ''}" onclick="S.cat='${c}';render()">${c}</button>`).join('')}
+ <h4 style="margin-top:20px">توافق الهاتف</h4><select onchange="S.ph=this.value;render()">${['الكل', ...PHONES].map(c => `<option ${S.ph === c ? 'selected' : ''}>${c}</option>`).join('')}</select>
+ <button class="cb" onclick="S.cat='الكل';S.ph='الكل';S.q='';render()">مسح الفلاتر</button></aside>
+ <section><div class="ttl"><h2>المنتجات</h2><span class="mu" id="cnt"></span></div><div class="g4" id="grid"></div></section></div></main>`}
+        function gridHtml(l) { return l.length ? l.map(p => `<div class="pc"><div class="im">${icon(p)}</div><b>${esc(p.name)}</b><span class="mu">${esc(p.phone || '')}</span><div class="pr">${badge(p)}<span class="price">${fmt(p.price)}</span></div><button class="b-nv" ${p.stock ? '' : 'disabled style="opacity:.5;cursor:not-allowed"'} onclick="add(${p.id})">أضف إلى السلة</button></div>`).join('') : '<p class="mu">لا توجد منتجات مطابقة.</p>' }
+        function grid() { const l = list(); $('#grid').innerHTML = gridHtml(l); $('#cnt').textContent = l.length.toLocaleString('ar-EG') + ' منتج' }
+        function add(id) { S.cart.push(id); render2() }
+        function openCart() {
+            const items = S.cart.map((id, i) => ({ p: S.products.find(x => x.id === id), i })), tot = items.reduce((s, x) => s + x.p.price, 0);
+            modal(`<h3>السلة</h3>${items.length ? items.map(x => `<div class="ci"><span>${esc(x.p.name)}</span><span class="price">${fmt(x.p.price)}</span><button class="b-ln" onclick="S.cart.splice(${x.i},1);openCart();render2()">✕</button></div>`).join('') + `<p>الإجمالي: <b class="price">${fmt(tot)}</b></p><button class="b-or" style="width:100%" onclick="checkout()">إتمام الطلب</button>` : '<p class="mu">السلة فارغة</p>'}<button class="b-ln" style="width:100%;margin-top:8px" onclick="closeM()">إغلاق</button>`)
+        }
+        function render2() { const b = $('#cc'); if (b) b.textContent = S.cart.length }
+        function checkout() {
+            const items = S.cart.map(id => S.products.find(x => x.id === id)), tot = items.reduce((s, p) => s + p.price, 0); S.sales += tot; S.cart = [];
+            modal(`<h3>✅ تم إرسال طلبك!</h3><p>عدد المنتجات: ${items.length}</p><p>الإجمالي: <b class="price">${fmt(tot)}</b></p><button class="b-or" style="width:100%" onclick="closeM();render()">متابعة التسوق</button>`)
+        }
 
-/* ---------- State ---------- */
-const seed = () => [
- ['CS-001','جراب سيليكون مضاد للصدمات','جرابات',250,'iPhone 15 Pro',40],['CS-002','جراب جلد فاخر MagSafe','جرابات',480,'iPhone 15 Pro',12],
- ['CS-003','جراب شفاف مقوى','جرابات',180,'Samsung S24 Ultra',3],['CS-004','جراب حماية ثقيلة','جرابات',320,'Samsung S24 Ultra',25],
- ['CS-005','جراب سيليكون ناعم','جرابات',150,'Xiaomi 13T',60],['SC-001','اسكرين زجاج 9H','اسكرينات',90,'iPhone 15 Pro',100],
- ['SC-002','اسكرين خصوصية','اسكرينات',140,'Samsung S24 Ultra',18],['SC-003','اسكرين نانو مرن','اسكرينات',70,'Xiaomi 13T',0],
- ['CH-001','شاحن سريع 33 وات','شواحن',380,'Xiaomi 13T',30],['CH-002','شاحن لاسلكي 15 وات','شواحن',520,'iPhone 15 Pro',4],
- ['CH-003','شاحن 45 وات سامسونج','شواحن',650,'Samsung S24 Ultra',15],['CB-001','كابل USB-C إلى Lightning','كابلات',210,'iPhone 15 Pro',50],
- ['CB-002','كابل USB-C مضفر 2 متر','كابلات',120,'Samsung S24 Ultra',70]
-].map(([sku,name,category,price,model,stock]) => ({sku,name,category,price,model,stock}));
-let S; try { S = JSON.parse(localStorage.getItem(KEY)); } catch(e) {}
-if (!S || !Array.isArray(S.products)) S = {products: seed(), orders: [], cart: []};
-S.cart = S.cart || []; S.orders = S.orders || [];
-const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} };
-const F = {q:'', cat:'الكل', model:'الكل'};
-let sortK = 'sku', sortD = 1, invQ = '';
+        function viewStore() {
+            const mine = S.products.filter(p => p.store === S.myStore), st = storeOf(S.myStore), cats = new Set(mine.map(p => p.cat)).size;
+            return head('لوحة صاحب المحل') + `<main>
+ <div class="stats"><div class="stat">المنتجات المعروضة<b>${mine.length}</b></div><div class="stat">عدد التصنيفات<b>${cats}</b></div><div class="stat">إجمالي المبيعات<b>${S.sales} EGP</b></div></div>
+ <div class="two"><div class="card"><h3>إنشاء بيانات المحل</h3><p class="mu">المحل الحالي: <b>${esc(st.name)}</b> <span class="tag ${st.status}">${{ pending: 'قيد المراجعة', approved: 'معتمد', rejected: 'مرفوض' }[st.status]}</span></p>
+ <input id="sn" placeholder="اسم المحل"><input id="sa" placeholder="المنطقة / العنوان"><button class="b-nv" onclick="newStore()">تسجيل المحل للمراجعة</button></div>
+ <div class="card"><h3>إضافة منتج</h3><input id="pn" placeholder="اسم المنتج"><div class="row"><input id="pp" type="number" min="0" placeholder="السعر (EGP)"><select id="pc">${CATS.map(c => `<option>${c}</option>`).join('')}</select></div>
+ <select id="pph">${PHONES.map(c => `<option>${c}</option>`).join('')}</select><textarea id="pd" rows="2" placeholder="الوصف"></textarea><input type="file" accept="image/*" onchange="prevImg(this)"><div id="pv"></div>
+ <label class="row" style="gap:8px"><span class="sw" style="flex:none"><input type="checkbox" id="ps" checked><span></span></span><span style="flex:1">متوفر</span></label>
+ <button class="b-or" onclick="addProd()">إضافة المنتج</button></div></div>
+ <div class="card"><h3>رفع ملف Excel / CSV</h3><p class="mu">الأعمدة: الاسم, السعر, التصنيف, الوصف (احفظ ملف Excel بصيغة CSV)</p>
+ <input type="file" accept=".csv,.txt" onchange="readCsv(this)"><div id="csvp"></div></div>
+ <div class="card"><h3>إدارة منتجاتي</h3><div class="tw"><table><tr><th>المنتج</th><th>التصنيف</th><th>السعر</th><th>التوفر</th><th></th></tr>
+ ${mine.map(p => `<tr><td>${esc(p.name)}${p.hidden ? ' <span class="tag rejected">مخفي</span>' : ''}</td><td>${esc(p.cat)}</td><td class="price">${p.price} EGP</td>
+ <td><label class="sw"><input type="checkbox" ${p.stock ? 'checked' : ''} onchange="tog(${p.id})"><span></span></label> ${p.stock ? 'متوفر' : 'غير متوفر'}</td>
+ <td><button class="b-ln" onclick="editP(${p.id})">تعديل</button> <button class="b-rd" onclick="delP(${p.id})">حذف</button></td></tr>`).join('') || '<tr><td colspan="5" class="mu">لا توجد منتجات</td></tr>'}</table></div></div></main>`
+        }
+        function newStore() { const n = $('#sn').value.trim(); if (!n) return; const id = 's' + (S.nid++); S.stores.push({ id, name: n, area: $('#sa').value.trim(), status: 'pending' }); S.myStore = id; render() }
+        function prevImg(i) { const f = i.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { S.img = r.result; $('#pv').innerHTML = `<img class="prev" src="${S.img}">` }; r.readAsDataURL(f) }
+        function addProd() {
+            const n = $('#pn').value.trim(), pr = parseFloat($('#pp').value); if (!n || isNaN(pr)) { alert('أدخل الاسم والسعر'); return }
+            S.products.push({ id: S.nid++, store: S.myStore, name: n, price: pr, cat: $('#pc').value, desc: $('#pd').value, phone: $('#pph').value, q: 20, stock: $('#ps').checked, hidden: false, img: S.img }); S.img = ''; render()
+        }
+        function tog(id) { const p = S.products.find(x => x.id === id); p.stock = !p.stock; render() }
+        function delP(id) { if (confirm('حذف المنتج؟')) { S.products = S.products.filter(p => p.id !== id); render() } }
+        function editP(id) {
+            const p = S.products.find(x => x.id === id);
+            modal(`<h3>تعديل المنتج</h3><input id="en" value="${esc(p.name)}"><input id="ep" type="number" value="${p.price}"><select id="ec">${CATS.map(c => `<option ${c === p.cat ? 'selected' : ''}>${c}</option>`).join('')}</select>
+ <div class="row"><button class="b-or" onclick="saveP(${id})">حفظ</button><button class="b-ln" onclick="closeM()">إلغاء</button></div>`)
+        }
+        function saveP(id) { const p = S.products.find(x => x.id === id); p.name = $('#en').value.trim() || p.name; p.price = parseFloat($('#ep').value) || p.price; p.cat = $('#ec').value; closeM(); render() }
+        function readCsv(i) {
+            const f = i.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => {
+                S.csv = r.result.split(/\r?\n/).map(l => l.split(/[,;\t]/).map(c => c.trim())).filter(c => c[0] && !isNaN(parseFloat(c[1]))).map(c => ({ name: c[0], price: parseFloat(c[1]), cat: CATS.includes(c[2]) ? c[2] : CATS[0], desc: c[3] || '' }));
+                $('#csvp').innerHTML = S.csv.length ? `<div class="tw"><table>${S.csv.map((x, k) => `<tr><td><input type="checkbox" style="width:auto;margin:0" checked data-k="${k}"></td><td>${esc(x.name)}</td><td>${x.price}</td><td>${esc(x.cat)}</td></tr>`).join('')}</table></div><button class="b-or" onclick="impCsv()">استيراد المنتجات المحددة</button>` : '<p class="err">لم يتم العثور على منتجات صالحة</p>'
+            }; r.readAsText(f)
+        }
+        function impCsv() { document.querySelectorAll('#csvp input:checked').forEach(c => { const x = S.csv[+c.dataset.k]; S.products.push({ id: S.nid++, store: S.myStore, ...x, phone: PHONES[0], q: 20, stock: true, hidden: false }) }); S.csv = []; render() }
 
-/* ---------- Toasts ---------- */
-function toast(msg, type='ok') {
-  const t = document.createElement('div'); t.className = 'toast';
-  t.style.background = type==='ok' ? '#0f9f6e' : type==='err' ? '#b91c1c' : '#1f3a7a';
-  t.textContent = msg; $('#toasts').append(t); setTimeout(() => t.remove(), 3200);
-}
+        function viewAdmin() {
+            const pend = S.stores.filter(s => s.status === 'pending');
+            return head('لوحة المدير') + `<main>
+ <div class="stats"><div class="stat">المحلات<b>${S.stores.length}</b></div><div class="stat">بانتظار المراجعة<b>${pend.length}</b></div><div class="stat">المنتجات<b>${S.products.length}</b></div></div>
+ <div class="card"><h3>مراجعة المحلات الجديدة</h3>${pend.map(s => `<div class="ci"><span><b>${esc(s.name)}</b> <span class="mu">${esc(s.area)}</span></span><span><button class="b-gr" onclick="setSt('${s.id}','approved')">قبول</button> <button class="b-rd" onclick="setSt('${s.id}','rejected')">رفض</button></span></div>`).join('') || '<p class="mu">لا توجد محلات بانتظار المراجعة</p>'}</div>
+ <div class="card"><h3>جميع المحلات</h3><div class="tw"><table><tr><th>المحل</th><th>المنطقة</th><th>الحالة</th><th>المنتجات</th></tr>${S.stores.map(s => `<tr><td>${esc(s.name)}</td><td>${esc(s.area)}</td><td><span class="tag ${s.status}">${{ pending: 'قيد المراجعة', approved: 'معتمد', rejected: 'مرفوض' }[s.status]}</span></td><td>${S.products.filter(p => p.store === s.id).length}</td></tr>`).join('')}</table></div></div>
+ <div class="card"><h3>إخفاء المنتجات المخالفة أو غير الصحيحة</h3><div class="tw"><table><tr><th>المنتج</th><th>المحل</th><th>السعر</th><th>الحالة</th><th></th></tr>${S.products.map(p => `<tr><td>${esc(p.name)}</td><td>${esc(storeOf(p.store).name)}</td><td class="price">${p.price} EGP</td><td>${p.hidden ? '<span class="tag rejected">مخفي</span>' : '<span class="tag approved">ظاهر</span>'}</td><td><button class="${p.hidden ? 'b-gr' : 'b-nv'}" onclick="hid(${p.id})">${p.hidden ? 'إظهار' : 'إخفاء'}</button></td></tr>`).join('')}</table></div></div></main>`
+        }
+        function setSt(id, s) { storeOf(id).status = s; render() }
+        function hid(id) { const p = S.products.find(x => x.id === id); p.hidden = !p.hidden; render() }
 
-/* ---------- View switching (#admin deep link supported) ---------- */
-function view(v) {
-  ['store','admin'].forEach(x => $('#v-'+x).classList.toggle('hidden', x!==v));
-  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('on', b.dataset.view===v));
-  $('#storeTools').style.visibility = v==='store' ? 'visible' : 'hidden';
-  try { history.replaceState(null,'', v==='admin' ? '#admin' : '#'); } catch(e) {}
-  v==='admin' ? renderAdmin() : renderStore();
-}
-document.querySelectorAll('.tab').forEach(b => b.onclick = () => view(b.dataset.view));
-
-
-/* ---------- Storefront ---------- */
-const stockBadge = n => n<=0 ? '<span class="badge b-bad">نفد المخزون</span>' : n<=LOW ? `<span class="badge b-warn">كمية محدودة (${n})</span>` : '<span class="badge b-ok">متوفر</span>';
-const hue = s => [...s].reduce((a,c) => a + c.charCodeAt(0), 0) * 37 % 360;
-function renderStore() {
-  const cats = ['الكل', ...new Set(S.products.map(p => p.category))], models = ['الكل', ...new Set(S.products.map(p => p.model))];
-  $('#fCat').innerHTML = cats.map(c => `<button class="chip ${F.cat===c?'on':''}" data-c="${esc(c)}">${esc(c)}</button>`).join('');
-  $('#fModel').innerHTML = models.map(m => `<option ${F.model===m?'selected':''}>${esc(m)}</option>`).join('');
-  const q = F.q.trim().toLowerCase();
-  const list = S.products.filter(p => (F.cat==='الكل'||p.category===F.cat) && (F.model==='الكل'||p.model===F.model) && (!q || [p.name,p.model,p.sku,p.category].join(' ').toLowerCase().includes(q)));
-  $('#resCount').textContent = list.length + ' منتج';
-  $('#grid').innerHTML = list.length ? list.map(p => `
-    <article class="glass p-3 flex flex-col gap-2">
-      <div class="pimg" style="background:#fff1e4">${ICONS[p.category]||'📦'}</div>
-      <h3 class="font-bold leading-snug">${esc(p.name)}</h3>
-      <div class="mu text-sm">${esc(p.model)}</div>
-      <div class="flex items-center justify-between"><b style="color:var(--ac);font-size:1.05rem">${EGP(p.price)}</b>${stockBadge(p.stock)}</div>
-      <button class="btn btn-pr mt-auto" data-add="${esc(p.sku)}" ${p.stock<=0?'disabled':''}>أضف إلى السلة</button>
-    </article>`).join('') : '<p class="mu col-span-full p-8 text-center">لا توجد منتجات مطابقة. جرّب تغيير البحث أو مسح الفلاتر.</p>';
-  renderCart();
-}
-$('#q').oninput = e => { F.q = e.target.value; renderStore(); };
-$('#fCat').onclick = e => { const c = e.target.closest('[data-c]'); if (c) { F.cat = c.dataset.c; renderStore(); } };
-$('#fModel').onchange = e => { F.model = e.target.value; renderStore(); };
-$('#reset').onclick = () => { F.q=''; F.cat=F.model='الكل'; $('#q').value=''; renderStore(); };
-$('#grid').onclick = e => { const b = e.target.closest('[data-add]'); if (b) addToCart(b.dataset.add); };
-
-/* ---------- Cart ---------- */
-const prod = sku => S.products.find(p => p.sku===sku);
-function addToCart(sku) {
-  const p = prod(sku), it = S.cart.find(i => i.sku===sku);
-  if ((it?.qty||0) >= p.stock) return toast('وصلت للحد الأقصى المتاح في المخزون','info');
-  it ? it.qty++ : S.cart.push({sku, qty:1}); save(); renderCart(); toast('تمت إضافة المنتج إلى السلة');
-}
-function totals() {
-  const sub = S.cart.reduce((a,i) => a + (prod(i.sku)?.price||0)*i.qty, 0);
-  const fee = sub===0 ? 0 : sub>=FREE_OVER ? 0 : DELIVERY; return {sub, fee, total: sub+fee};
-}
-function renderCart() {
-  S.cart = S.cart.filter(i => prod(i.sku));
-  $('#cartCount').textContent = S.cart.reduce((a,i) => a+i.qty, 0);
-  $('#cartItems').innerHTML = S.cart.length ? S.cart.map(i => { const p = prod(i.sku); return `
-    <div class="glass p-3 flex gap-3 items-center">
-      <div class="pimg" style="width:3.2rem;font-size:1.6rem;aspect-ratio:1;background:#fff1e4">${ICONS[p.category]||'📦'}</div>
-      <div class="flex-1 min-w-0"><div class="font-bold text-sm">${esc(p.name)}</div><div class="mu text-xs">${esc(p.model)} · ${EGP(p.price)}</div>
-        <div class="flex items-center gap-2 mt-1"><button class="btn" style="padding:.1rem .6rem" data-q="${esc(i.sku)}" data-d="-1" aria-label="إنقاص">−</button><b>${i.qty}</b><button class="btn" style="padding:.1rem .6rem" data-q="${esc(i.sku)}" data-d="1" aria-label="زيادة">+</button></div></div>
-      <button class="btn" data-del="${esc(i.sku)}" aria-label="حذف">🗑️</button></div>`; }).join('')
-    : '<p class="mu text-center p-8">السلة فارغة. أضف منتجاً من المتجر لتبدأ.</p>';
-  const t = totals();
-  $('#cartFoot').innerHTML = `<div class="flex justify-between"><span class="mu">المجموع الفرعي</span><span>${EGP(t.sub)}</span></div>
-    <div class="flex justify-between"><span class="mu">التوصيل ${t.sub>0&&!t.fee?'(مجاني)':''}</span><span>${EGP(t.fee)}</span></div>
-    <div class="flex justify-between font-extrabold text-lg"><span>الإجمالي</span><span style="color:var(--ac)">${EGP(t.total)}</span></div>
-    <button id="checkout" class="btn btn-ac w-full mt-2" ${S.cart.length?'':'disabled'}>إتمام الطلب</button>`;
-  $('#checkout').onclick = openCheckout;
-}
-$('#cartItems').onclick = e => {
-  const q = e.target.closest('[data-q]'), d = e.target.closest('[data-del]');
-  if (q) { const it = S.cart.find(i => i.sku===q.dataset.q), p = prod(it.sku), n = it.qty + +q.dataset.d;
-    if (n<1) S.cart = S.cart.filter(i => i!==it); else if (n>p.stock) toast('لا توجد كمية أكبر في المخزون','info'); else it.qty = n; }
-  if (d) S.cart = S.cart.filter(i => i.sku!==d.dataset.del);
-  save(); renderCart();
-};
-const openCart = o => { $('#drawer').classList.toggle('open', o); $('#veil').classList.toggle('open', o); };
-$('#cartBtn').onclick = () => openCart(true); $('#closeCart').onclick = $('#veil').onclick = () => openCart(false);
-
-/* ---------- Modal + checkout ---------- */
-function modal(html) { $('#modalBox').innerHTML = html; $('#modal').classList.remove('hidden'); $('#modal').classList.add('flex'); }
-function closeModal() { $('#modal').classList.add('hidden'); $('#modal').classList.remove('flex'); }
-$('#modal').onclick = e => { if (e.target.id==='modal') closeModal(); };
-function openCheckout() {
-  const t = totals();
-  modal(`<h2 class="font-extrabold text-lg mb-3">إتمام الطلب</h2><div class="space-y-2">
-    <input id="cName" class="inp" placeholder="الاسم الكامل"><input id="cPhone" class="inp" placeholder="رقم الهاتف" inputmode="tel"><textarea id="cAddr" class="inp" rows="2" placeholder="عنوان التوصيل"></textarea>
-    <div class="flex justify-between font-bold pt-2"><span>الإجمالي (الدفع عند الاستلام)</span><span style="color:var(--ac)">${EGP(t.total)}</span></div></div>
-    <div class="flex gap-2 mt-4"><button id="confirmOrder" class="btn btn-ac flex-1">تأكيد الطلب</button><button class="btn" onclick="closeModal()">إلغاء</button></div>`);
-  $('#confirmOrder').onclick = () => {
-    if (!$('#cName').value.trim() || !/^[0-9+\s-]{8,}$/.test($('#cPhone').value.trim()) || !$('#cAddr').value.trim()) return toast('أكمل الاسم ورقم هاتف صحيح والعنوان','err');
-    S.cart.forEach(i => { prod(i.sku).stock -= i.qty; });
-    S.orders.push({id: Date.now(), total: t.total, items: S.cart.length, date: new Date().toISOString()});
-    S.cart = []; save(); closeModal(); openCart(false); renderStore(); toast('تم تأكيد طلبك بنجاح، شكراً لثقتك!');
-  };
-}
-
-/* ---------- Admin: stats ---------- */
-function renderAdmin() {
-  const cards = [['📦','إجمالي المنتجات',S.products.length],['🗂️','عدد الفئات',new Set(S.products.map(p=>p.category)).size],
-    ['⚠️','تنبيهات المخزون المنخفض',S.products.filter(p=>p.stock<=LOW).length],['💰','إجمالي المبيعات',EGP(S.orders.reduce((a,o)=>a+o.total,0))]];
-  $('#stats').innerHTML = cards.map(([i,l,v]) => `<div class="glass p-4"><div style="font-size:1.4rem">${i}</div><div class="mu text-sm">${l}</div><div class="font-extrabold text-2xl">${v}</div></div>`).join('');
-  renderInv();
-}
-
-/* ---------- Admin: inventory (search / sort / edit / delete) ---------- */
-const COLS = [['sku','SKU'],['name','الاسم'],['category','الفئة'],['price','السعر'],['model','الموديل'],['stock','المخزون']];
-function renderInv() {
-  $('#invHead').innerHTML = '<tr>' + COLS.map(([k,l]) => `<th class="sort" data-s="${k}">${l}${sortK===k?(sortD>0?' ▲':' ▼'):''}</th>`).join('') + '<th>إجراءات</th></tr>';
-  const q = invQ.toLowerCase();
-  const rows = S.products.filter(p => !q || Object.values(p).join(' ').toLowerCase().includes(q))
-    .sort((a,b) => (a[sortK]>b[sortK]?1:a[sortK]<b[sortK]?-1:0) * sortD);
-  $('#invBody').innerHTML = rows.map(p => `<tr><td>${esc(p.sku)}</td><td>${esc(p.name)}</td><td>${esc(p.category)}</td><td>${EGP(p.price)}</td><td>${esc(p.model)}</td>
-    <td>${p.stock} ${p.stock<=LOW?'<span class="badge b-warn">منخفض</span>':''}</td>
-    <td><button class="btn" style="padding:.2rem .6rem" data-edit="${esc(p.sku)}">تعديل</button> <button class="btn" style="padding:.2rem .6rem" data-rm="${esc(p.sku)}">حذف</button></td></tr>`).join('')
-    || '<tr><td colspan="7" class="mu">لا توجد نتائج.</td></tr>';
-}
-$('#invQ').oninput = e => { invQ = e.target.value; renderInv(); };
-$('#invHead').onclick = e => { const th = e.target.closest('[data-s]'); if (!th) return; sortD = sortK===th.dataset.s ? -sortD : 1; sortK = th.dataset.s; renderInv(); };
-$('#invBody').onclick = e => {
-  const rm = e.target.closest('[data-rm]'), ed = e.target.closest('[data-edit]');
-  if (rm && confirm('هل تريد حذف هذا المنتج نهائياً؟')) { S.products = S.products.filter(p => p.sku!==rm.dataset.rm); save(); renderAdmin(); toast('تم حذف المنتج','info'); }
-  if (ed) { const p = prod(ed.dataset.edit);
-    modal(`<h2 class="font-extrabold text-lg mb-3">تعديل المنتج ${esc(p.sku)}</h2><div class="space-y-2">
-      <input id="eN" class="inp" value="${esc(p.name)}"><input id="eC" class="inp" value="${esc(p.category)}"><input id="eM" class="inp" value="${esc(p.model)}">
-      <input id="eP" class="inp" type="number" min="1" value="${p.price}"><input id="eS" class="inp" type="number" min="0" value="${p.stock}"></div>
-      <div class="flex gap-2 mt-4"><button id="eSave" class="btn btn-ac flex-1">حفظ التعديلات</button><button class="btn" onclick="closeModal()">إلغاء</button></div>`);
-    $('#eSave').onclick = () => { const pr = +$('#eP').value, st = +$('#eS').value;
-      if (!$('#eN').value.trim() || !$('#eC').value.trim() || !$('#eM').value.trim() || !(pr>0) || !Number.isInteger(st) || st<0) return toast('تحقق من القيم المدخلة','err');
-      Object.assign(p, {name:$('#eN').value.trim(), category:$('#eC').value.trim(), model:$('#eM').value.trim(), price:pr, stock:st});
-      save(); closeModal(); renderAdmin(); toast('تم حفظ التعديلات'); }; }
-};
-
-/* ---------- Admin: CSV import engine ---------- */
-// Minimal RFC-4180 parser: quotes, escaped quotes, BOM, comma or semicolon delimiter
-function parseCSV(t) {
-  t = t.replace(/^\uFEFF/, ''); const l1 = t.split(/\r?\n/)[0];
-  const d = (l1.match(/;/g)||[]).length > (l1.match(/,/g)||[]).length ? ';' : ',';
-  const out = []; let row = [], c = '', q = false;
-  for (let i = 0; i < t.length; i++) { const ch = t[i];
-    if (q) { if (ch==='"') { if (t[i+1]==='"') { c += '"'; i++; } else q = false; } else c += ch; }
-    else if (ch==='"') q = true;
-    else if (ch===d) { row.push(c); c = ''; }
-    else if (ch==='\n' || ch==='\r') { if (ch==='\r' && t[i+1]==='\n') i++; row.push(c); out.push(row); row = []; c = ''; }
-    else c += ch; }
-  if (c || row.length) { row.push(c); out.push(row); }
-  return out.filter(r => r.some(x => x.trim()));
-}
-let rows = []; // {sel, d:{...}, err}
-function validate(d, seen) {
-  if (!d.sku) return 'كود SKU مفقود';
-  if (seen.has(d.sku)) return 'SKU مكرر في الملف';
-  if (!d.name) return 'اسم المنتج مفقود';
-  if (!d.category) return 'الفئة مفقودة';
-  if (!(d.price > 0) || isNaN(d.price)) return 'سعر غير صحيح';
-  if (!d.model) return 'الموديل مفقود';
-  if (!Number.isInteger(d.stock) || d.stock < 0) return 'مخزون غير صحيح';
-  return '';
-}
-function handleFile(f) {
-  if (!f) return;
-  if (!/\.csv$/i.test(f.name)) return toast('الملف يجب أن يكون بصيغة CSV. احفظ ملف Excel بصيغة CSV UTF-8','err');
-  const r = new FileReader();
-  r.onload = () => {
-    const data = parseCSV(String(r.result)); if (data.length < 2) return toast('الملف فارغ أو لا يحتوي على صفوف بيانات','err');
-    const h = data[0].map(x => x.trim().toLowerCase()), need = ['sku','name','category','price','model','stock'];
-    const miss = need.filter(k => !h.includes(k));
-    if (miss.length) return toast('أعمدة ناقصة في الملف: ' + miss.join(', '),'err');
-    const seen = new Set();
-    rows = data.slice(1).map(r => { const o = {}; h.forEach((k,i) => o[k] = (r[i]||'').trim());
-      const d = {sku:o.sku, name:o.name, category:o.category, price:parseFloat(o.price), model:o.model, stock:o.stock===''?NaN:Number(o.stock)};
-      const err = validate(d, seen); if (d.sku) seen.add(d.sku); return {sel: !err, d, err, raw: o}; });
-    renderPrev(); const bad = rows.filter(x => x.err).length;
-    bad ? toast(`تم رفع الملف، وتم اكتشاف ${bad} صف به أخطاء`,'err') : toast('تم رفع الملف بنجاح');
-  };
-  r.readAsText(f, 'UTF-8');
-}
-function renderPrev() {
-  $('#prev').classList.remove('hidden');
-  $('#prevBody').innerHTML = rows.map((x,i) => `<tr style="${x.err?'opacity:.8':''}"><td><input type="checkbox" data-i="${i}" ${x.sel?'checked':''} ${x.err?'disabled':''} aria-label="تحديد الصف ${i+1}"></td><td>${i+1}</td>
-    <td>${esc(x.raw.sku)}</td><td>${esc(x.raw.name)}</td><td>${esc(x.raw.category)}</td><td>${esc(x.raw.price)}</td><td>${esc(x.raw.model)}</td><td>${esc(x.raw.stock)}</td>
-    <td>${x.err ? `<span class="badge b-bad">${x.err}</span>` : prod(x.d.sku) ? '<span class="badge b-warn">صالح (تحديث منتج موجود)</span>' : '<span class="badge b-ok">صالح للإضافة</span>'}</td></tr>`).join('');
-  const n = rows.filter(x => x.sel).length;
-  $('#prevSum').textContent = `${rows.length} صف · ${rows.filter(x=>!x.err).length} صالح · ${rows.filter(x=>x.err).length} به أخطاء · ${n} محدد`;
-  $('#doImport').disabled = !n; $('#selAll').checked = n>0 && n===rows.filter(x=>!x.err).length;
-}
-$('#prevBody').onchange = e => { const i = e.target.dataset.i; if (i!==undefined) { rows[i].sel = e.target.checked; renderPrev(); } };
-$('#selAll').onchange = e => { rows.forEach(x => { if (!x.err) x.sel = e.target.checked; }); renderPrev(); };
-$('#doImport').onclick = () => {
-  const todo = rows.filter(x => x.sel && !x.err); if (!todo.length) return;
-  $('#doImport').disabled = true; $('#prog').classList.remove('hidden'); let i = 0, added = 0, upd = 0;
-  (function step() { // chunked so the progress bar can paint
-    todo.slice(i, i+10).forEach(x => { const p = prod(x.d.sku); p ? (Object.assign(p, x.d), upd++) : (S.products.push({...x.d}), added++); });
-    i += 10; $('#bar').style.width = Math.min(100, i/todo.length*100) + '%';
-    if (i < todo.length) return setTimeout(step, 60);
-    save(); rows = []; $('#prev').classList.add('hidden'); $('#prog').classList.add('hidden'); $('#bar').style.width = '0';
-    $('#file').value = ''; renderAdmin(); toast(`تم الاستيراد: ${added} منتج جديد، ${upd} تم تحديثه`);
-  })();
-};
-const drop = $('#drop');
-drop.onclick = () => $('#file').click();
-drop.onkeydown = e => { if (e.key==='Enter' || e.key===' ') $('#file').click(); };
-$('#file').onchange = e => handleFile(e.target.files[0]);
-['dragover','dragenter'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
-['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
-drop.addEventListener('drop', e => handleFile(e.dataTransfer.files[0]));
-
-/* Sample template (UTF-8 BOM so Excel shows Arabic correctly) */
-$('#tpl').onclick = () => {
-  const csv = '\uFEFFsku,name,category,price,model,stock\n' +
-    'CS-101,جراب سيليكون أسود,جرابات,200,iPhone 15 Pro,30\nSC-101,اسكرين زجاج مضاد للخدش,اسكرينات,85,Samsung S24 Ultra,80\n' +
-    'CH-101,شاحن سريع 20 وات,شواحن,300,Xiaomi 13T,25\nCB-101,كابل USB-C مضفر,كابلات,110,Samsung S24 Ultra,60\n' +
-    'CS-102,"جراب مع حلقة, لون أزرق",جرابات,170,Xiaomi 13T,0\n';
-  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'}));
-  a.download = 'products-template.csv'; a.click(); URL.revokeObjectURL(a.href); toast('تم تحميل نموذج CSV','info');
-};
-
-/* ---------- Boot ---------- */
-view(location.hash === '#admin' ? 'admin' : 'store');
-</script>
+        /* ===== Modal & router ===== */
+        function modal(h) { $('#mbody').innerHTML = h; $('#modal').classList.add('show') }
+        function closeM() { $('#modal').classList.remove('show') }
+        $('#modal').addEventListener('click', e => { if (e.target.id === 'modal') closeM() });
+        function render() { closeM(); const v = { null: viewLogin, user: viewUser, store: viewStore, admin: viewAdmin }[S.role]; $('#app').innerHTML = v(); if (S.role === 'user') grid() }
+        render(); if (S.role === 'user') grid();
+    </script>
 </body>
+
 </html>
